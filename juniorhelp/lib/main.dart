@@ -37,19 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
-                iconData: Icons.home,
+              iconData: Icons.home,
               title: "Home",
               onclick: () {
                 final FancyBottomNavigationState fState =
                     bottomNavigationKey.currentState;
-                fState.setPage(2);
+                fState.setPage(1);
               }),
           TabData(
-              iconData: Icons.search,
-              title: "Search",
+              iconData: Icons.map,
+              title: "Maps",
               onclick: () => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Home()))),
-          TabData(iconData: Icons.shopping_cart, title: "Basket")
+          TabData(iconData: Icons.pie_chart, title: "Statistics")
         ],
         initialSelection: 1,
         key: bottomNavigationKey,
