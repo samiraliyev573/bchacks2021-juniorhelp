@@ -33,15 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Fancy Bottom Navigation"),
-      ),
-      body: Container(  
-        decoration: BoxDecoration(color: Colors.white),
-        child: Center(
-          child: _getPage(currentPage),
-        ),
-      ),
+      body: _getPage(currentPage),
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
           TabData(
@@ -78,68 +70,11 @@ class _MyHomePageState extends State<MyHomePage> {
   _getPage(int page) {
     switch (page) {
       case 0:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the home page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Maps()));
-              },
-            ),
-            RaisedButton(
-              child: Text(
-                "Change to page 3",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                final FancyBottomNavigationState fState =
-                    bottomNavigationKey.currentState;
-                fState.setPage(2);
-              },
-            )
-          ],
-        );
+        return Home();
       case 1:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the search page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => Statistics()));
-              },
-            )
-          ],
-        );
+        return Statistics();
       default:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the basket page"),
-            RaisedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {},
-            )
-          ],
-        );
+        return Maps();
     }
   }
 }
