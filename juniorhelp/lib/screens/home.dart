@@ -128,6 +128,7 @@ class _HomeState extends State<Home> {
             todolist != null
                 ? Expanded(
                     child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(8),
