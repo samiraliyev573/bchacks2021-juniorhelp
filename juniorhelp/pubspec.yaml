@@ -38,6 +38,8 @@ dependencies:
   pie_chart: ^4.0.1
   cloud_firestore: ^0.14.3
   firebase_messaging: ^7.0.3
+  font_awesome_flutter: ^8.11.0
+
 
 
 
