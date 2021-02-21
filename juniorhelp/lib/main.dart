@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:juniorhelp/screens/onboarding.dart';
 import 'screens/home.dart';
 import 'screens/maps.dart';
 import 'screens/statistics.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.blue,
           accentColor: Colors.orange),
-      home: MyHomePage(),
+      home: OnBoarding(),
     );
   }
 }
