@@ -174,14 +174,11 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                 return Column(
                   children: [
                     Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                        margin: EdgeInsets.only(
+                            top: 30, bottom: 10, left: 20, right: 20),
                         padding:
                             EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                         child: Image.asset(imageLink[index])),
-                    SizedBox(
-                      height: 20,
-                    ),
                     Container(
                       padding: EdgeInsets.all(20),
                       child: Text(

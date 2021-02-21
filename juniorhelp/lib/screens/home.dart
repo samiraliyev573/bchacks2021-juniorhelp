@@ -24,30 +24,8 @@ class _HomeState extends State<Home> {
 
   @override
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
-  void showSnackbar(Map<String, dynamic> message){
-    dynamic notifText = message['notification'];
-    _scaffoldKey.currentState.showSnackBar(
-        new SnackBar(
-          content: new Text(
-            notifText["body"],
-            style: TextStyle(
-                fontSize: 17
-            ),
-          ),
-          backgroundColor: Colors.deepOrange,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-          behavior: SnackBarBehavior.floating,
-          action: SnackBarAction(
-            textColor: Colors.white,
-            label: 'OK'
-          ),
-        )
-    );
-  }
 
   void initState() {
     super.initState();
@@ -58,25 +36,8 @@ class _HomeState extends State<Home> {
         todolist = event.docs;
       });
     });
-    _firebaseMessaging.getToken().then((token){
-      print(token);
-    });
-    _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          showSnackbar(message);
-          print("onLaunch: $message");
-        },
-        onLaunch: (Map<String, dynamic> message) async {
-          print("onLaunch: $message");
-          // TODO optional
-        },
-        onResume: (Map<String, dynamic> message) async {
-          print("onResume: $message");
-          // TODO optional
-        }
-    );
-
   }
+
   bool _initialized = false;
   Future<void> init() async {
     if (!_initialized) {
@@ -98,6 +59,7 @@ class _HomeState extends State<Home> {
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     CollectionReference list = FirebaseFirestore.instance.collection('todos');
@@ -148,77 +110,68 @@ class _HomeState extends State<Home> {
                       },
                     ),
                     GestureDetector(
-                        onTap: () {
-                          DatePicker.showPicker(context,
-                              theme: DatePickerTheme(
-                                containerHeight: 210.0,
-                              ),
-                              showTitleActions: true, onConfirm: (time) {
-                                String timeHour = time.hour.toString();
-                                if(time.hour<10){
-                                  timeHour = "0"+time.hour.toString();
-                                }
+                      onTap: () {
+                        DatePicker.showPicker(context,
+                            theme: DatePickerTheme(
+                              containerHeight: 210.0,
+                            ),
+                            showTitleActions: true, onConfirm: (time) {
+                          String timeHour = time.hour.toString();
+                          if (time.hour < 10) {
+                            timeHour = "0" + time.hour.toString();
+                          }
+                          setState(() {
+                            if (time.minute < 10) {
+                              _time = '${timeHour}:0${time.minute}';
+                            } else {
+                              _time = '${timeHour}:${time.minute}';
+                            }
+                          });
+                        },
+                            pickerModel:
+                                CustomPicker(currentTime: DateTime.now()),
+                            locale: LocaleType.az);
+                      },
+                      child: Container(
+                        width: 200,
+                        decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(width: 1, color: Colors.grey),
+                            ),
+                            color: Colors.transparent),
+                        child: Row(children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Time:",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey)),
+                          FlatButton(
+                            child: Text(_time,
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.grey)),
+                            onPressed: () {
+                              DatePicker.showPicker(context,
+                                  theme: DatePickerTheme(
+                                    containerHeight: 210.0,
+                                  ),
+                                  showTitleActions: true, onConfirm: (time) {
                                 setState(() {
-                                  if(time.minute<10){
-                                    _time = '${timeHour}:0${time.minute}';
-                                  }else{
-                                    _time = '${timeHour}:${time.minute}';
+                                  if (time.minute < 10) {
+                                    _time = '${time.hour}:0${time.minute}';
+                                  } else {
+                                    _time = '${time.hour}:${time.minute}';
                                   }
                                 });
                               },
-                              pickerModel: CustomPicker(currentTime: DateTime.now()),
-                              locale: LocaleType.az
-                          );
-                        },
-                        child: Container(
-                          width: 200,
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              color: Colors.transparent
+                                  pickerModel:
+                                      CustomPicker(currentTime: DateTime.now()),
+                                  locale: LocaleType.az);
+                            },
                           ),
-                          child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text("Time:",style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.grey
-                                )
-                                ),
-                                FlatButton(
-                                  child: Text(
-                                      _time,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey
-                                      )
-                                  ),
-                                  onPressed: () {
-                                    DatePicker.showPicker(context,
-                                        theme: DatePickerTheme(
-                                          containerHeight: 210.0,
-                                        ),
-                                        showTitleActions: true, onConfirm: (time) {
-                                          setState(() {
-                                            if(time.minute<10){
-                                              _time = '${time.hour}:0${time.minute}';
-                                            }else{
-                                              _time = '${time.hour}:${time.minute}';
-                                            }
-                                          });
-                                        },
-                                        pickerModel: CustomPicker(currentTime: DateTime.now()),
-                                        locale: LocaleType.az
-                                    );
-                                  },
-                                ),
-                              ]
-                          ),
-                        ),
+                        ]),
                       ),
+                    ),
                   ],
                 ),
                 buttons: [
@@ -234,11 +187,7 @@ class _HomeState extends State<Home> {
                   )
                 ]).show();
           }, //addTask("Take your insulin", "Feb 20, 11:00 AM"),
-          child: Icon(
-              Icons.add,
-              size: 43,
-              color: Colors.white
-          ),
+          child: Icon(Icons.add, size: 43, color: Colors.white),
         ),
       ),
       body: Container(
@@ -252,7 +201,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Memory",
+                      "CareTaker",
                       style: TextStyle(fontSize: 22),
                     ),
                     SizedBox(
@@ -262,7 +211,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(3),
                       color: Colors.green,
                       child: Text(
-                        "Jogger",
+                        "Buddy",
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -294,27 +243,19 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(18)),
                         child: ListTile(
                           title: Text(
-                              todoName,
-                            style: TextStyle(
-                              fontSize: 21,
-                                color: Colors.white
-                            ),
+                            todoName,
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
-                          subtitle:Text(
+                          subtitle: Text(
                             todoDate,
-                            style: TextStyle(
-                                fontSize: 19,
-                              color: Colors.white70
-                            ),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white70),
                           ),
                           trailing: IconButton(
                               onPressed: () {
                                 deleteTask(todolist[index].id);
                               },
-                              icon: Icon(
-                                Icons.delete,
-                                  color: Colors.white70
-                              )),
+                              icon: Icon(Icons.delete, color: Colors.white70)),
                         ),
                       );
                     },
@@ -391,18 +332,18 @@ class CustomPicker extends CommonPickerModel {
   DateTime finalTime() {
     return currentTime.isUtc
         ? DateTime.utc(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        this.currentLeftIndex(),
-        this.currentMiddleIndex(),
-        this.currentRightIndex())
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            this.currentLeftIndex(),
+            this.currentMiddleIndex(),
+            this.currentRightIndex())
         : DateTime(
-        currentTime.year,
-        currentTime.month,
-        currentTime.day,
-        this.currentLeftIndex(),
-        this.currentMiddleIndex(),
-        this.currentRightIndex());
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            this.currentLeftIndex(),
+            this.currentMiddleIndex(),
+            this.currentRightIndex());
   }
 }

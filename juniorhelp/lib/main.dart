@@ -22,20 +22,20 @@ class MyApp extends StatelessWidget {
       title: 'Junior Help',
       theme: ThemeData(
           brightness: Brightness.light,
-          primaryColor: Colors.blue,
-          accentColor: Colors.orange,
-          fontFamily: 'LibreBaskerville'),
-      home: SignUp(),
+          primaryColor: Color(0xff4caf50),
+          accentColor: Color(0xff00897b),
+          fontFamily: 'Circular'),
+      home: OnBoarding(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class BottomNav extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BottomNavState createState() => _BottomNavState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _BottomNavState extends State<BottomNav> {
   int currentPage = 0;
 
   GlobalKey bottomNavigationKey = GlobalKey();

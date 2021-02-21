@@ -75,11 +75,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: LibreBaskerville
+    - family: Circular
       fonts:
-        - asset: assets/fonts/LibreBaskerville-Regular.ttf
+        - asset: assets/fonts/CircularStd-Medium.ttf
+        - asset: assets/fonts/CircularAir-Light.ttf
           weight: 100
-        - asset: assets/fonts/LibreBaskerville-Bold.ttf
+        - asset: assets/fonts/CircularStd-Bold.ttf
           weight: 500
        # - asset: assets/fonts/LibreBaskerville-Italic.tff
        #   style: italic
