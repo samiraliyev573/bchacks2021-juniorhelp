@@ -36,22 +36,25 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _getPage(currentPage),
       bottomNavigationBar: FancyBottomNavigation(
         tabs: [
+          TabData(iconData: Icons.home, title: "Home", onclick: () {}),
           TabData(
-              iconData: Icons.home,
-              title: "Home",
+              iconData: Icons.map,
+              title: "Maps",
+              onclick: () {
+                final FancyBottomNavigationState fState =
+                    bottomNavigationKey.currentState;
+                fState.setPage(0);
+              }),
+          TabData(
+              iconData: Icons.pie_chart,
+              title: "Analytics",
               onclick: () {
                 final FancyBottomNavigationState fState =
                     bottomNavigationKey.currentState;
                 fState.setPage(1);
-              }),
-          TabData(
-              iconData: Icons.map,
-              title: "Maps",
-              onclick: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Home()))),
-          TabData(iconData: Icons.pie_chart, title: "Statistics")
+              })
         ],
-        initialSelection: 1,
+        initialSelection: 0,
         key: bottomNavigationKey,
         onTabChangedListener: (position) {
           setState(() {
@@ -72,9 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return Home();
       case 1:
+        return Maps();
+      case 2:
         return Statistics();
       default:
-        return Maps();
+        return Home();
     }
   }
 }

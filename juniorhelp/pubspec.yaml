@@ -35,7 +35,7 @@ dependencies:
   firebase_core: ^0.7.0
   
   cloud_firestore: ^0.16.0+1
-  geolocator: ^6.2.0
+  
 
 
 dev_dependencies:
@@ -54,8 +54,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+   - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
