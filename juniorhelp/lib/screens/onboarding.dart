@@ -134,11 +134,6 @@ class _OnBoardingState extends State<OnBoarding> with TickerProviderStateMixin {
                       index++;
                     });
 
-                    if (index > 3) {
-                      setState(() {
-                        index = 0;
-                      });
-                    }
                     pageController.animateToPage(index,
                         duration: Duration(milliseconds: 500),
                         curve: Curves.easeInOutQuad);

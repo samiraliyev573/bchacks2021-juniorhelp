@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.blue,
-          accentColor: Colors.orange),
+          accentColor: Colors.orange,
+          fontFamily: 'LibreBaskerville'),
       home: OnBoarding(),
     );
   }
