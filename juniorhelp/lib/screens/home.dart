@@ -122,6 +122,7 @@ class _HomeState extends State<Home> {
         width: 80,
         height: 80,
         child: FloatingActionButton(
+          backgroundColor: Color(0xff118ab2),
           onPressed: () {
             Alert(
                 context: context,
@@ -236,6 +237,7 @@ class _HomeState extends State<Home> {
           child: Icon(
               Icons.add,
               size: 43,
+              color: Colors.white
           ),
         ),
       ),
@@ -277,27 +279,41 @@ class _HomeState extends State<Home> {
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(10),
                     itemCount: todolist.length,
                     itemBuilder: (context, index) {
                       String todoName = todolist[index].data()['name'];
                       String todoDate = todolist[index].data()['date'];
 
                       return Card(
+                        elevation: 5,
                         color: todolist[index].data()['isChecked']
-                            ? Colors.green
-                            : Colors.white12,
+                            ? Color(0xff2ec4b6)
+                            : Color(0xff495057),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18)),
                         child: ListTile(
-                          title: Text(todoName),
-                          subtitle: Text(todoDate),
+                          title: Text(
+                              todoName,
+                            style: TextStyle(
+                              fontSize: 21,
+                                color: Colors.white
+                            ),
+                          ),
+                          subtitle:Text(
+                            todoDate,
+                            style: TextStyle(
+                                fontSize: 19,
+                              color: Colors.white70
+                            ),
+                          ),
                           trailing: IconButton(
                               onPressed: () {
                                 deleteTask(todolist[index].id);
                               },
                               icon: Icon(
                                 Icons.delete,
+                                  color: Colors.white70
                               )),
                         ),
                       );

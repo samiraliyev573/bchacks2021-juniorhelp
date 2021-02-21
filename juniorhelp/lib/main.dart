@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.blue,
           accentColor: Colors.orange),
-      home: OnBoarding(),
+      home: Home(),
     );
   }
 }
