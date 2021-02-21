@@ -32,9 +32,25 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference list = FirebaseFirestore.instance.collection('todos');
+    Future<void> addTask(String name, String date) {
+      return list.add({
+        'name': name,
+        'date': date,
+        'isChecked': false,
+      }).catchError((onError) => print("Failed to add task $onError"));
+    }
+
+    Future<void> deleteTask(String documentId) {
+      return list
+          .doc(documentId)
+          .delete()
+          .catchError((onError) => print("Failed to delete task $onError"));
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => addTask("Take your insulin", "Feb 20, 11:00 AM"),
         child: Icon(Icons.add),
       ),
       body: Container(
@@ -85,7 +101,13 @@ class _HomeState extends State<Home> {
                         child: ListTile(
                           title: Text(todoName),
                           subtitle: Text(todoDate),
-                          trailing: Icon(Icons.delete),
+                          trailing: IconButton(
+                              onPressed: () {
+                                deleteTask(todolist[index].id);
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                              )),
                         ),
                       );
                     },
