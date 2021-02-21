@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
@@ -19,38 +18,20 @@ class _HomeState extends State<Home> {
   String name = "";
   String date = "";
 
-  DateTime _now = DateTime.now();
-  String _time = "";
-
   @override
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   void initState() {
     super.initState();
-    init();
-    _time = DateFormat('HH:mm').format(_now);
+
     todolistsubscription = collectionReference.snapshots().listen((event) {
       setState(() {
         todolist = event.docs;
       });
     });
-  }
-
-  bool _initialized = false;
-  Future<void> init() async {
-    if (!_initialized) {
-      // For iOS request permission first.
-      _firebaseMessaging.requestNotificationPermissions();
-      _firebaseMessaging.configure();
-
-      // For testing purposes print the Firebase Messaging token
-      String token = await _firebaseMessaging.getToken();
-      print("FirebaseMessaging token: $token");
-
-      _initialized = true;
-    }
   }
 
   @override
@@ -109,69 +90,6 @@ class _HomeState extends State<Home> {
                         date = value;
                       },
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        DatePicker.showPicker(context,
-                            theme: DatePickerTheme(
-                              containerHeight: 210.0,
-                            ),
-                            showTitleActions: true, onConfirm: (time) {
-                          String timeHour = time.hour.toString();
-                          if (time.hour < 10) {
-                            timeHour = "0" + time.hour.toString();
-                          }
-                          setState(() {
-                            if (time.minute < 10) {
-                              _time = '${timeHour}:0${time.minute}';
-                            } else {
-                              _time = '${timeHour}:${time.minute}';
-                            }
-                          });
-                        },
-                            pickerModel:
-                                CustomPicker(currentTime: DateTime.now()),
-                            locale: LocaleType.az);
-                      },
-                      child: Container(
-                        width: 200,
-                        decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(width: 1, color: Colors.grey),
-                            ),
-                            color: Colors.transparent),
-                        child: Row(children: [
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text("Time:",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.grey)),
-                          FlatButton(
-                            child: Text(_time,
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.grey)),
-                            onPressed: () {
-                              DatePicker.showPicker(context,
-                                  theme: DatePickerTheme(
-                                    containerHeight: 210.0,
-                                  ),
-                                  showTitleActions: true, onConfirm: (time) {
-                                setState(() {
-                                  if (time.minute < 10) {
-                                    _time = '${time.hour}:0${time.minute}';
-                                  } else {
-                                    _time = '${time.hour}:${time.minute}';
-                                  }
-                                });
-                              },
-                                  pickerModel:
-                                      CustomPicker(currentTime: DateTime.now()),
-                                  locale: LocaleType.az);
-                            },
-                          ),
-                        ]),
-                      ),
-                    ),
                   ],
                 ),
                 buttons: [
@@ -201,7 +119,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "CareTaker",
+                      "Memory",
                       style: TextStyle(fontSize: 22),
                     ),
                     SizedBox(
@@ -211,7 +129,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(3),
                       color: Colors.green,
                       child: Text(
-                        "Buddy",
+                        "Jogger",
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -244,12 +162,12 @@ class _HomeState extends State<Home> {
                         child: ListTile(
                           title: Text(
                             todoName,
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            style: TextStyle(fontSize: 21, color: Colors.white),
                           ),
                           subtitle: Text(
                             todoDate,
                             style:
-                                TextStyle(fontSize: 16, color: Colors.white70),
+                                TextStyle(fontSize: 19, color: Colors.white70),
                           ),
                           trailing: IconButton(
                               onPressed: () {
@@ -270,80 +188,5 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-}
-
-class CustomPicker extends CommonPickerModel {
-  String digits(int value, int length) {
-    return '$value'.padLeft(length, "0");
-  }
-
-  CustomPicker({DateTime currentTime, LocaleType locale})
-      : super(locale: locale) {
-    this.currentTime = currentTime ?? DateTime.now();
-    this.setLeftIndex(this.currentTime.hour);
-    this.setMiddleIndex(this.currentTime.minute);
-    this.setRightIndex(this.currentTime.second);
-  }
-
-  @override
-  String leftStringAtIndex(int index) {
-    if (index >= 0 && index < 24) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String middleStringAtIndex(int index) {
-    if (index >= 0 && index < 60) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String rightStringAtIndex(int index) {
-    if (index >= 0 && index < 60) {
-      return this.digits(index, 2);
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  String leftDivider() {
-    return "";
-  }
-
-  @override
-  String rightDivider() {
-    return ":";
-  }
-
-  @override
-  List<int> layoutProportions() {
-    return [1, 1, 0]; //only hour and minute will be shown
-  }
-
-  @override
-  DateTime finalTime() {
-    return currentTime.isUtc
-        ? DateTime.utc(
-            currentTime.year,
-            currentTime.month,
-            currentTime.day,
-            this.currentLeftIndex(),
-            this.currentMiddleIndex(),
-            this.currentRightIndex())
-        : DateTime(
-            currentTime.year,
-            currentTime.month,
-            currentTime.day,
-            this.currentLeftIndex(),
-            this.currentMiddleIndex(),
-            this.currentRightIndex());
   }
 }
