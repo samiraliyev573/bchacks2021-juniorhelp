@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:pie_chart/pie_chart.dart' as pc;
 
 class Statistics extends StatefulWidget{
   @override
@@ -142,196 +143,230 @@ class _StatisticsState extends State<Statistics> {
   }
   
   Widget barChart(){
-    return Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top:25),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:[
-                  GestureDetector(
-                    onTap: () => page+1,
-                    child: Icon(Icons.arrow_back_ios_sharp),
-                  ),
-                  SizedBox(width:3),
-                  Text(
-                    "Weekly Statistics",
-                    style: TextStyle(
-                        fontSize: 30
-                    ),
-                  ),
-                  SizedBox(width:3),
-                  GestureDetector(
-                    onTap: () => page+1,
-                    child: Icon(
-                      Icons.arrow_forward_ios_sharp,
+    return  Column(
+              children: [
+                Row(
+                children: [
+                  SizedBox(width:13),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal:45,vertical: _mediaHeight*0.03),
+                    child: BarChart(
+                        mainBarData()
                     ),
                   )
-                ]
-            ),
-          ),
-          Row(
-            children: [
-              SizedBox(width:13),
+                ],
+              ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal:45,vertical: _mediaHeight*0.03),
-                child: BarChart(
-                    mainBarData()
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: _mediaWidth*0.3+5,
+                      height: _mediaWidth*0.3+5,
+                      child: Padding(
+                        padding: EdgeInsets.all(7),
+                        child: Container(
+                            child: Center(
+                                child: Text(
+                                  "230 \nTotal",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      height: 1.3,
+                                      fontSize: 24,
+                                      color: Colors.grey[800]
+                                  ),
+                                )
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              shape: BoxShape.circle,
+                            )
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.lightBlueAccent, Colors.greenAccent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Container(
+                      width: _mediaWidth*0.3+5,
+                      height: _mediaWidth*0.3+5,
+                      child: Padding(
+                        padding: EdgeInsets.all(7),
+                        child: Container(
+                            child: Center(
+                                child: Text(
+                                  "30 \n Average",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      height: 1.2,
+                                      fontSize: 24,
+                                      color: Colors.grey[800]
+                                  ),
+                                )
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              shape: BoxShape.circle,
+                            )
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.lightBlueAccent, Colors.greenAccent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height:30),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: _mediaWidth*0.3+5,
+                      height: _mediaWidth*0.3+5,
+                      child: Padding(
+                        padding: EdgeInsets.all(7),
+                        child: Container(
+                            child: Center(
+                                child: Text(
+                                  "5 \nFailed",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      height: 1.3,
+                                      fontSize: 24,
+                                      color: Colors.grey[800]
+                                  ),
+                                )
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              shape: BoxShape.circle,
+                            )
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.lightBlueAccent, Colors.greenAccent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Container(
+                      width: _mediaWidth*0.3+5,
+                      height: _mediaWidth*0.3+5,
+                      child: Padding(
+                        padding: EdgeInsets.all(7),
+                        child: Container(
+                            child: Center(
+                                child: Text(
+                                  "6% \n Increase",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      height: 1.2,
+                                      fontSize: 22,
+                                      color: Colors.grey[800]
+                                  ),
+                                )
+                            ),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              shape: BoxShape.circle,
+                            )
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.lightBlueAccent, Colors.greenAccent],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ],
                 ),
               )
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: _mediaWidth*0.3+5,
-                  height: _mediaWidth*0.3+5,
-                  child: Padding(
-                    padding: EdgeInsets.all(7),
-                    child: Container(
-                        child: Center(
-                            child: Text(
-                              "230 \nTotal",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  height: 1.3,
-                                  fontSize: 24,
-                                  color: Colors.grey[800]
-                              ),
-                            )
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                        )
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.lightBlueAccent, Colors.greenAccent],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                Container(
-                  width: _mediaWidth*0.3+5,
-                  height: _mediaWidth*0.3+5,
-                  child: Padding(
-                    padding: EdgeInsets.all(7),
-                    child: Container(
-                        child: Center(
-                            child: Text(
-                              "30 \n Average",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  height: 1.2,
-                                  fontSize: 24,
-                                  color: Colors.grey[800]
-                              ),
-                            )
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                        )
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.lightBlueAccent, Colors.greenAccent],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height:30),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: _mediaWidth*0.3+5,
-                  height: _mediaWidth*0.3+5,
-                  child: Padding(
-                    padding: EdgeInsets.all(7),
-                    child: Container(
-                        child: Center(
-                            child: Text(
-                              "5 \nFailed",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  height: 1.3,
-                                  fontSize: 24,
-                                  color: Colors.grey[800]
-                              ),
-                            )
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                        )
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.lightBlueAccent, Colors.greenAccent],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                Container(
-                  width: _mediaWidth*0.3+5,
-                  height: _mediaWidth*0.3+5,
-                  child: Padding(
-                    padding: EdgeInsets.all(7),
-                    child: Container(
-                        child: Center(
-                            child: Text(
-                              "6% \n Increase",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  height: 1.2,
-                                  fontSize: 22,
-                                  color: Colors.grey[800]
-                              ),
-                            )
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          shape: BoxShape.circle,
-                        )
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.lightBlueAccent, Colors.greenAccent],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ]
-    );
+            ]
+          );
   }
 
-  Widget pieChart(){
-    return Text("Gehbe");
+  Widget pieChartW(){
+    Map<String, double> dataMap = {
+      "Water": 5,
+      "Walk": 3,
+      "Pills": 2,
+      "Sleep": 2,
+    };
+    List<String> toDos = ["Water","Walk","Pills","Sleep"];
+    List<Color> clrs = [Colors.lightGreen,Colors.lightBlueAccent,Colors.redAccent,Colors.indigo];
+    return Column(
+      children:[
+        pc.PieChart(
+          dataMap: dataMap,
+          animationDuration: Duration(milliseconds: 300),
+          chartRadius: 160,
+          colorList: clrs,
+          chartType: pc.ChartType.ring,
+          ringStrokeWidth: 48,
+          centerText: "Tasks",
+          legendOptions: pc.LegendOptions(
+            showLegends:false
+          ),
+          chartValuesOptions: pc.ChartValuesOptions(
+            showChartValueBackground: true,
+            showChartValues: true,
+            showChartValuesInPercentage: false,
+            showChartValuesOutside: false,
+          ),
+        ),
+        SizedBox(height:30),
+        Text(
+            "Total tasks:12",
+            style: TextStyle(fontSize: 25),
+        ),
+        for(int i=0;i<clrs.length;i++)...{
+          SizedBox(height:20),
+          Row(
+              children: [
+              SizedBox(width:10),
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: clrs[i]
+                  ),
+                ),
+              SizedBox(width:10),
+              Text(
+                  toDos[i],
+                  style: TextStyle(fontSize: 20)
+              ),
+              Spacer(),
+              Text(
+                  "${dataMap[toDos[i]]}",
+                  style: TextStyle(fontSize: 20)
+              ),
+                SizedBox(width:10),
+            ]
+          )
+        },
+      ]
+    );
   }
   @override
   build(BuildContext context) {
@@ -345,7 +380,46 @@ class _StatisticsState extends State<Statistics> {
         centerTitle: true,
         elevation: 0,
       ),
-      body: (page%2==0) ? barChart() : pieChart()
+      body:Column(
+          children: [
+            Padding(
+            padding: EdgeInsets.only(top:25),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        page+=1;
+                      });
+                    },
+                    child: Icon(Icons.arrow_back_ios_sharp),
+                  ),
+                  SizedBox(width:3),
+                  Text(
+                    "Weekly Statistics",
+                    style: TextStyle(
+                        fontSize: 30
+                    ),
+                  ),
+                  SizedBox(width:3),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        page+=1;
+                      });
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios_sharp,
+                    ),
+                  )
+                ]
+            ),
+          ),
+        SizedBox(height:30),
+        (page%2==0) ? barChart() : pieChartW()
+      ]
+    )
     );
   }
 }
