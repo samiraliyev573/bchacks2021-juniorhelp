@@ -40,7 +40,7 @@ class _StatisticsState extends State<Statistics> {
   BarChartData mainBarData() {
     return BarChartData(
       alignment: BarChartAlignment.spaceAround,
-      maxY: 150,
+      maxY: 100,
       barTouchData: BarTouchData(
         enabled: false,
         touchTooltipData: BarTouchTooltipData(
@@ -113,7 +113,7 @@ class _StatisticsState extends State<Statistics> {
           x: 1,
           barRods: [
             BarChartRodData(
-                y: 30,
+                y: 60,
                 width: 25,
                 colors: [Colors.lightBlueAccent, Colors.greenAccent])
           ],
@@ -123,7 +123,7 @@ class _StatisticsState extends State<Statistics> {
           x: 2,
           barRods: [
             BarChartRodData(
-                y: 82,
+                y: 52,
                 width: 25,
                 colors: [Colors.lightBlueAccent, Colors.greenAccent])
           ],
@@ -133,7 +133,7 @@ class _StatisticsState extends State<Statistics> {
           x: 3,
           barRods: [
             BarChartRodData(
-                y: 135,
+                y: 65,
                 width: 25,
                 colors: [Colors.lightBlueAccent, Colors.greenAccent])
           ],
@@ -143,7 +143,7 @@ class _StatisticsState extends State<Statistics> {
           x: 3,
           barRods: [
             BarChartRodData(
-                y: 103,
+                y: 73,
                 width: 25,
                 colors: [Colors.lightBlueAccent, Colors.greenAccent])
           ],
@@ -153,7 +153,7 @@ class _StatisticsState extends State<Statistics> {
           x: 3,
           barRods: [
             BarChartRodData(
-                y: 50,
+                y: 60,
                 width: 25,
                 colors: [Colors.lightBlueAccent, Colors.greenAccent])
           ],
@@ -188,7 +188,7 @@ class _StatisticsState extends State<Statistics> {
                 child: Container(
                     child: Center(
                         child: Text(
-                      "230 \nTotal",
+                      "23 \nTotal",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1.3, fontSize: 24, color: Colors.grey[800]),
@@ -215,7 +215,7 @@ class _StatisticsState extends State<Statistics> {
                 child: Container(
                     child: Center(
                         child: Text(
-                      "30 \n Average",
+                      "4 \n Average",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1.2, fontSize: 24, color: Colors.grey[800]),
@@ -251,7 +251,7 @@ class _StatisticsState extends State<Statistics> {
                 child: Container(
                     child: Center(
                         child: Text(
-                      "5 \nFailed",
+                      "2 \nFailed",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1.3, fontSize: 24, color: Colors.grey[800]),
@@ -278,7 +278,7 @@ class _StatisticsState extends State<Statistics> {
                 child: Container(
                     child: Center(
                         child: Text(
-                      "6% \n Increase",
+                      "20% \n Increase",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           height: 1.2, fontSize: 22, color: Colors.grey[800]),
@@ -305,9 +305,9 @@ class _StatisticsState extends State<Statistics> {
 
   Widget pieChartW() {
     Map<String, double> dataMap = {
-      "Water": 5,
-      "Walk": 3,
-      "Pills": 2,
+      "Water": 10,
+      "Walk": 8,
+      "Pills": 3,
       "Sleep": 2,
     };
     List<String> toDos = ["Water", "Walk", "Pills", "Sleep"];
@@ -336,7 +336,7 @@ class _StatisticsState extends State<Statistics> {
       ),
       SizedBox(height: 30),
       Text(
-        "Total tasks:12",
+        "Total tasks:23",
         style: TextStyle(fontSize: 25),
       ),
       for (int i = 0; i < clrs.length; i++) ...{
