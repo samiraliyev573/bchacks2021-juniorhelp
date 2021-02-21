@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,13 +17,69 @@ class _HomeState extends State<Home> {
   String name = "";
   String date = "";
   @override
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void showSnackbar(Map<String, dynamic> message){
+    dynamic notifText = message['notification'];
+    _scaffoldKey.currentState.showSnackBar(
+        new SnackBar(
+          content: new Text(
+            notifText["body"],
+            style: TextStyle(
+                fontSize: 17
+            ),
+          ),
+          backgroundColor: Colors.deepOrange,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+          behavior: SnackBarBehavior.floating,
+          action: SnackBarAction(
+            textColor: Colors.white,
+            label: 'OK'
+          ),
+        )
+    );
+  }
+
   void initState() {
     super.initState();
+    init();
     todolistsubscription = collectionReference.snapshots().listen((event) {
       setState(() {
         todolist = event.docs;
       });
     });
+    _firebaseMessaging.configure(
+        onMessage: (Map<String, dynamic> message) async {
+          showSnackbar(message);
+          print("onLaunch: $message");
+        },
+        onLaunch: (Map<String, dynamic> message) async {
+          print("onLaunch: $message");
+          // TODO optional
+        },
+        onResume: (Map<String, dynamic> message) async {
+          print("onResume: $message");
+          // TODO optional
+        }
+    );
+
+  }
+  bool _initialized = false;
+  Future<void> init() async {
+    if (!_initialized) {
+      // For iOS request permission first.
+      _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging.configure();
+
+      // For testing purposes print the Firebase Messaging token
+      String token = await _firebaseMessaging.getToken();
+      print("FirebaseMessaging token: $token");
+
+      _initialized = true;
+    }
   }
 
   @override
@@ -31,7 +88,6 @@ class _HomeState extends State<Home> {
     // TODO: implement dispose
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     CollectionReference list = FirebaseFirestore.instance.collection('todos');
@@ -51,6 +107,7 @@ class _HomeState extends State<Home> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Alert(
