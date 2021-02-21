@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,7 +13,8 @@ class _HomeState extends State<Home> {
   StreamSubscription<QuerySnapshot> todolistsubscription;
   final CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('todos');
-
+  String name = "";
+  String date = "";
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,45 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => addTask("Take your insulin", "Feb 20, 11:00 AM"),
+        onPressed: () {
+          Alert(
+              context: context,
+              title: "Task for Senior",
+              content: Column(
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.check),
+                      labelText: 'Name',
+                    ),
+                    onChanged: (value) {
+                      name = value;
+                    },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.calendar_today),
+                      labelText: 'Date',
+                    ),
+                    onChanged: (value) {
+                      date = value;
+                    },
+                  ),
+                ],
+              ),
+              buttons: [
+                DialogButton(
+                  onPressed: () {
+                    addTask(name, date);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "Create",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                )
+              ]).show();
+        }, //addTask("Take your insulin", "Feb 20, 11:00 AM"),
         child: Icon(Icons.add),
       ),
       body: Container(
@@ -95,7 +135,11 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, index) {
                       String todoName = todolist[index].data()['name'];
                       String todoDate = todolist[index].data()['date'];
+
                       return Card(
+                        color: todolist[index].data()['isChecked']
+                            ? Colors.green
+                            : Colors.white12,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8)),
                         child: ListTile(
