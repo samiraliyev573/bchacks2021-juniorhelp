@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:juniorhelp/screens/onboarding.dart';
 import 'screens/home.dart';
+import 'package:juniorhelp/screens/login.dart';
+import 'package:juniorhelp/screens/signup.dart';
 import 'screens/maps.dart';
 import 'screens/statistics.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.blue,
           accentColor: Colors.orange,
           fontFamily: 'LibreBaskerville'),
-      home: OnBoarding(),
+      home: SignUp(),
     );
   }
 }
